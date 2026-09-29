@@ -36,3 +36,11 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository_owner }}/traccar:${{ github.sha }}
             ghcr.io/${{ github.repository_owner }}/traccar:latest
+      
+      - name: Trigger homelab deployment
+        env:
+          GH_TOKEN: ${{ secrets.HOMELAB_DEPLOY_TOKEN }}
+        run: |
+          gh workflow run deploy.yml \
+            --repo domasskirgaila/homelab-traccar \
+            --ref master
